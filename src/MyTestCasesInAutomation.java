@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class MyTestCases {
+public class MyTestCasesInAutomation {
 
 	WebDriver driver = new ChromeDriver();
 	String website = "https://codenboxautomationlab.com/practice/";

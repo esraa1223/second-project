@@ -69,7 +69,7 @@ public class MyTestCasesInAutomation {
 
 	}
 
-	@Test(priority = 5, description = "THis Test To Move from Window To Other ", enabled = true)
+	@Test(priority = 5, description = "THis Test To Move from Window To Other ", enabled = false)
 	public void Switch_Window_Example() {
 
 		WebElement OpenWindowButton = driver.findElement(By.id("openwindow"));
@@ -87,7 +87,7 @@ public class MyTestCasesInAutomation {
 
 	}
 
-	@Test(priority = 6, description = "Move to other Tap")
+	@Test(priority = 6, description = "Move to other Tap",enabled=false)
 	public void Switch_Tab_Example() throws InterruptedException {
 
 		WebElement OpenTapButton = driver.findElement(By.id("opentab"));
@@ -117,5 +117,20 @@ public class MyTestCasesInAutomation {
 //		
 
 	}
+	
+	@Test(priority=8,description = "Web Table Example")
+	public void Web_Table_Example() {
+		WebElement TheTable=driver.findElement(By.id("product"));
+		List<WebElement> TheDataInSideTheTable = TheTable.findElements(By.tagName("tr"));
+		for(int i=1;i<TheDataInSideTheTable.size();i++) {
+			
+//			System.out.println(TheDataInSideTheTable.get(i).getText()); 
+			
+			int totalTDInTheRow=TheDataInSideTheTable.get(i).findElements(By.tagName("td")).size();
+			System.out.println(TheDataInSideTheTable.get(i).findElements(By.tagName("td")).get(totalTDInTheRow-1).getText());
+		}
+	}
+	
+	
 
 }

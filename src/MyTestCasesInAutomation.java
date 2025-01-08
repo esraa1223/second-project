@@ -3,19 +3,23 @@ import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class MyTestCasesInAutomation {
 
 	WebDriver driver = new ChromeDriver();
 	String website = "https://codenboxautomationlab.com/practice/";
 	Random rand = new Random();
+	JavascriptExecutor js=(JavascriptExecutor) driver;
 
 	@BeforeTest
 	public void mySetup() {
@@ -29,6 +33,9 @@ public class MyTestCasesInAutomation {
 		List<WebElement> AllRoadioButtons = driver.findElements(By.className("radioButton"));
 		int randomIndex = rand.nextInt(AllRoadioButtons.size());
 		AllRoadioButtons.get(randomIndex).click();
+		boolean expected=true;
+		boolean actual=AllRoadioButtons.get(randomIndex).isSelected();
+		Assert.assertEquals(actual, expected);
 
 	}
 
@@ -42,7 +49,12 @@ public class MyTestCasesInAutomation {
 		DynamicListInput.sendKeys(countryCodes[randomIndex]);
 		Thread.sleep(1000);
 		DynamicListInput.sendKeys(Keys.chord(Keys.ARROW_DOWN, Keys.ENTER));
-
+		
+		String DataInSideTheInput= (String) js.executeScript("return arguments[0].value", DynamicListInput);
+        String UpdatedValue=DataInSideTheInput.toLowerCase();
+        boolean expected=true;
+        boolean Actul=UpdatedValue.contains(countryCodes[randomIndex].toLowerCase());
+        Assert.assertEquals(Actul, expected);
 	}
 
 	@Test(priority = 3, description = "Static Dropdown Test", enabled = false)
@@ -51,12 +63,14 @@ public class MyTestCasesInAutomation {
 		WebElement SelectElement = driver.findElement(By.id("dropdown-class-example"));
 		Select sel = new Select(SelectElement);
 
-//		sel.selectByIndex(3);
+		sel.selectByIndex(3);
 //		sel.selectByValue("option2");
-		sel.selectByVisibleText("Selenium");
+//		sel.selectByVisibleText("Selenium");
+		
+		
 	}
 
-	@Test(priority = 4, description = "CheckBoxes Test", enabled = false)
+	@Test(priority = 4, description = "CheckBoxes Test", enabled = true)
 	public void Checkbox_Example() throws InterruptedException {
 
 		List<WebElement> CheckBoxes = driver.findElements(By.xpath("//input[@type='checkbox']"));
@@ -66,6 +80,9 @@ public class MyTestCasesInAutomation {
 		int randomindex = rand.nextInt(CheckBoxes.size());
 		Thread.sleep(1000);
 		CheckBoxes.get(randomindex).click();
+		boolean Actual=CheckBoxes.get(randomindex).isSelected();
+		boolean expected=true;
+		Assert.assertEquals(Actual, expected);
 
 	}
 
@@ -118,7 +135,7 @@ public class MyTestCasesInAutomation {
 
 	}
 	
-	@Test(priority=8,description = "Web Table Example")
+	@Test(priority=8,description = "Web Table Example",enabled=false)
 	public void Web_Table_Example() {
 		WebElement TheTable=driver.findElement(By.id("product"));
 		List<WebElement> TheDataInSideTheTable = TheTable.findElements(By.tagName("tr"));
@@ -129,6 +146,30 @@ public class MyTestCasesInAutomation {
 			int totalTDInTheRow=TheDataInSideTheTable.get(i).findElements(By.tagName("td")).size();
 			System.out.println(TheDataInSideTheTable.get(i).findElements(By.tagName("td")).get(totalTDInTheRow-1).getText());
 		}
+	}
+	@Test(priority=9,description = "Hide and Show",enabled=false)
+	public void Emlement_Displayed_Example() throws InterruptedException {
+		WebElement HideButton=driver.findElement(By.id("hide-textbox"));
+		WebElement ShowButton=driver.findElement(By.id("show-textbox"));
+		WebElement TextButton=driver.findElement(By.id("displayed-text"));
+		SoftAssert myAssertion=new SoftAssert();
+		js.executeScript("alert('soso')");
+		driver.switchTo().alert().accept();
+		js.executeScript("window.scrollTo(0,1500)");
+		HideButton.click();
+		Assert.assertEquals(TextButton.isDisplayed(), false);
+//		myAssertion.assertEquals(TextButton.isDisplayed(),true);
+		Thread.sleep(5000);
+		ShowButton.click();
+		Assert.assertEquals(TextButton.isDisplayed(), true);
+		myAssertion.assertAll();
+	}
+	@Test(priority=10,description = "CheckTitle", enabled=false)
+	public void CHeckTiltle() {
+		String ActualTitle="Automation Practice - CodenBox AutomationLab";
+		String ExpectedTitle=driver.getTitle();
+		Assert.assertEquals(ActualTitle, ExpectedTitle);
+		
 	}
 	
 	

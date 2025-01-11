@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="9" total="10" passed="1" failed="0" skipped="0">
+<testng-results ignored="14" total="15" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-01-09T01:39:07 EET" name="Default suite" finished-at="2025-01-09T01:39:24 EET" duration-ms="16104">
+  <suite started-at="2025-01-11T20:05:49 EET" name="Default suite" finished-at="2025-01-11T20:06:00 EET" duration-ms="11135">
     <groups>
     </groups>
-    <test started-at="2025-01-09T01:39:07 EET" name="Default test" finished-at="2025-01-09T01:39:24 EET" duration-ms="16104">
+    <test started-at="2025-01-11T20:05:49 EET" name="Default test" finished-at="2025-01-11T20:06:00 EET" duration-ms="11135">
       <class name="MyTestCasesInAutomation">
-        <test-method is-config="true" signature="mySetup()[pri:0, instance:MyTestCasesInAutomation@5ef6ae06]" started-at="2025-01-09T01:39:07 EET" name="mySetup" finished-at="2025-01-09T01:39:22 EET" duration-ms="14788" status="PASS">
+        <test-method is-config="true" signature="mySetup()[pri:0, instance:MyTestCasesInAutomation@2cc44ad]" started-at="2025-01-11T20:05:49 EET" name="mySetup" finished-at="2025-01-11T20:06:00 EET" duration-ms="10623" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- mySetup -->
-        <test-method signature="Checkbox_Example()[pri:4, instance:MyTestCasesInAutomation@5ef6ae06]" started-at="2025-01-09T01:39:22 EET" name="Checkbox_Example" description="CheckBoxes Test" finished-at="2025-01-09T01:39:23 EET" duration-ms="1232" status="PASS">
+        <test-method signature="Download_Example()[pri:14, instance:MyTestCasesInAutomation@2cc44ad]" started-at="2025-01-11T20:06:00 EET" name="Download_Example" description="Download File in the main Page" finished-at="2025-01-11T20:06:00 EET" duration-ms="466" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- Checkbox_Example -->
+        </test-method> <!-- Download_Example -->
       </class> <!-- MyTestCasesInAutomation -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

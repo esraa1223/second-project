@@ -1,3 +1,4 @@
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,6 +9,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
@@ -20,11 +22,12 @@ public class MyTestCasesInAutomation {
 	String website = "https://codenboxautomationlab.com/practice/";
 	Random rand = new Random();
 	JavascriptExecutor js=(JavascriptExecutor) driver;
-
+    Actions action=new Actions(driver);
 	@BeforeTest
 	public void mySetup() {
 		driver.get(website);
 		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 
 	}
 
@@ -70,7 +73,7 @@ public class MyTestCasesInAutomation {
 		
 	}
 
-	@Test(priority = 4, description = "CheckBoxes Test", enabled = true)
+	@Test(priority = 4, description = "CheckBoxes Test", enabled = false)
 	public void Checkbox_Example() throws InterruptedException {
 
 		List<WebElement> CheckBoxes = driver.findElements(By.xpath("//input[@type='checkbox']"));
@@ -164,7 +167,84 @@ public class MyTestCasesInAutomation {
 		Assert.assertEquals(TextButton.isDisplayed(), true);
 		myAssertion.assertAll();
 	}
-	@Test(priority=10,description = "CheckTitle", enabled=false)
+	@Test(priority=10,description = "Enabled/Disabled Test",enabled=false)
+	public void Enabled_Disabled_Example() throws InterruptedException {
+		
+		WebElement DisabledButton=driver.findElement(By.id("disabled-button"));
+		WebElement EnabledButton=driver.findElement(By.id("enabled-button"));
+		WebElement InputFeild=driver.findElement(By.id("enabled-example-input"));
+		DisabledButton.click();
+		js.executeScript("window.scrollTo(1,1900)");
+		boolean ActualValue=InputFeild.isEnabled();
+		boolean ExpectedValue=false;
+		Assert.assertEquals(ActualValue, ExpectedValue);
+		Thread.sleep(2000);
+		EnabledButton.click();
+		boolean ActualValue2=InputFeild.isEnabled();
+		boolean ExpectedValue2=true;
+		Assert.assertEquals(ActualValue2, ExpectedValue2);
+		InputFeild.sendKeys("123");
+		
+	}
+	@Test(priority=11,description = "Mouse Hover Example",enabled=false)
+	public void Mouse_Hover_Example() throws InterruptedException {
+		
+		WebElement MouseHover=driver.findElement(By.id("mousehover"));
+		js.executeScript("window.scrollTo(1,1900)");
+		action.moveToElement(MouseHover).perform();;
+		Thread.sleep(2000);
+//		driver.findElement(By.linkText("Top")).click();
+		driver.findElement(By.partialLinkText("Relo")).click();
+	}
+	@Test(priority=12,description = "Calendar Example",enabled=false)
+	public void Calendar__Example() throws InterruptedException {
+		
+		WebElement CalendarButton =driver.findElement(By.linkText("Booking Calendar"));
+		CalendarButton.click();
+		List<String> WindowsHandels = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(WindowsHandels.get(1));
+		System.out.println(driver.getTitle());
+		int totalAvailableDates=driver.findElements(By.className("date_available")).size();
+		driver.findElements(By.className("date_available")).get(0).click();
+		driver.findElements(By.className("date_available")).get(totalAvailableDates-1).click();
+		System.out.println(totalAvailableDates);
+		
+	}
+	
+	@Test(priority=13,description = "iFrame Test",enabled=false)
+	public void IFrame_Example() throws InterruptedException {
+		WebElement Iframe=driver.findElement(By.id("courses-iframe"));
+//	driver.switchTo().frame(0);
+	driver.switchTo().frame("iframe-name");
+//	driver.switchTo().frame(Iframe);
+String output=driver.findElement(By.xpath("//*[@id=\"ct_text_editor-be8c5ad\"]/div/div/p")).getText();
+	System.out.println(output);
+	
+		
+	}
+	
+	@Test(priority=14,description = "Download File in the main Page",enabled=true)
+	public void Download_Example() throws InterruptedException {
+//		WebElement TheFile= driver.findElement(By.linkText("Download Apk files"));
+//	WebElement TheFile=driver.findElement(By.xpath("//a[@href='http://codenboxautomationlab.com/wp-content/uploads/2022/12/APKFiles-1.zip']"));
+//		WebElement TheFile=driver.findElement(By.xpath("//a[@class='wp-block-button__link wp-element-button']"));
+		WebElement TheFile=driver.findElement(By.cssSelector(".wp-block-button__link.wp-element-button"));
+		TheFile.click();
+
+	
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Test(priority=14,description = "CheckTitle", enabled=false)
 	public void CHeckTiltle() {
 		String ActualTitle="Automation Practice - CodenBox AutomationLab";
 		String ExpectedTitle=driver.getTitle();
